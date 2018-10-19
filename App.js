@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import Expo from 'expo';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga'
 
 import HomeScreen from './src/HomeScreen/index';
 import medicationReducer from './src/medicationReducer';
+import rootSaga from './src/sagas';
 
-const store = createStore(medicationReducer);
+
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
+  medicationReducer,
+  applyMiddleware(sagaMiddleware)
+);
+
+sagaMiddleware.run(rootSaga);
 
 export default class App extends Component {
   constructor() {
@@ -24,22 +33,13 @@ export default class App extends Component {
     this.setState({ isReady: true });
   }
 
-  addMedication(medication) {
-    console.log('Adding medication:', medication);
-  }
-
   render() {
     if (!this.state.isReady) {
       return <Expo.AppLoading />;
     }
     return (
       <Provider store={store}>
-        <HomeScreen
-          screenProps={{
-            medication: this.state.medication,
-            addMedication: this.addMedication,
-          }}
-        />
+        <HomeScreen/>
       </Provider>
     );
   }

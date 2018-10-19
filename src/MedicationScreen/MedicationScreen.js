@@ -3,8 +3,6 @@ import { AppRegistry } from 'react-native';
 import { Container, Header, Left, Body, Title, Card, CardItem, Content, Right, Icon, Button, Text } from 'native-base';
 import { connect } from 'react-redux';
 
-import AddMedication from './AddMedication';
-
 const renderIcon = (format) => {
   switch (format) {
     case 'pill':
@@ -16,7 +14,7 @@ const renderIcon = (format) => {
   }
 };
 
-const renderSchedule = ({ amount, frequency }) => <Text>{`${amount} x ${frequency}`}</Text>;
+const renderSchedule = ({ amount, frequency, dose }) => <Text>{`${amount} x ${dose} @ ${frequency}`}</Text>;
 
 class Medication extends React.Component {
   render() {
@@ -31,7 +29,7 @@ class Medication extends React.Component {
                     <Icon active name={renderIcon(med.format)} />
                     <Text>{med.name}</Text>
                     <Right>
-                      {renderSchedule(med.schedule)}
+                      {renderSchedule({...med.schedule, dose: med.dose})}
                     </Right>
                   </CardItem>
                 </Card>
@@ -69,6 +67,7 @@ Medication.navigationOptions = ({ navigation }) => ({
 });
 
 const mapStateToProps = (state) => {
+  console.log("Mapping state to props, state is", state);
   const { medication } = state;
   return { medication };
 };

@@ -52,8 +52,11 @@ const INITIAL_STATE = {
 
 const medicationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case 'ADD_MEDICATION':
+      console.log("In reducer, calling add medication state and action are", state, action);
+      return {medications: [...state.medications, action.medication]};
     default:
-      return state
+      return state;
   }
 };
 
