@@ -1,57 +1,14 @@
 import { combineReducers } from 'redux';
 
 const INITIAL_STATE = {
-  medications: [
-    {
-      id: 1,
-      name: 'Centrum',
-      format: 'pill',
-      type: 'vitamin',
-      dose: '1 caplet',
-      schedule: {
-        amount: 1,
-        frequency: 'daily morning',
-        note: 'with food',
-      },
-    },
-    {
-      id: 2,
-      name: 'Acetaminophen',
-      format: 'pill',
-      type: 'painkiller',
-      dose: '500mg',
-      schedule: {
-        amount: 1,
-        frequency: 'when needed',
-      },
-    },
-    {
-      id: 3,
-      name: 'Zinc',
-      format: 'pill',
-      type: 'vitamin',
-      dose: '50mg',
-      schedule: {
-        amount: 1,
-        frequency: 'daily morning',
-      },
-    },
-    {
-      id: 4,
-      name: 'Oxeze Turbuhaler',
-      format: 'inhaler',
-      type: 'bronchodilator',
-      dose: '6mcg',
-      schedule: {
-        amount: 1,
-        frequency: 'daily morning',
-      },
-    },
-  ],
+  medications: [],
 };
 
 const medicationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case 'FETCH_MEDICATIONS_SUCCESS':
+      console.log("In reducer, calling fetched medications state and action are", state, action);
+      return {medications: action.medications};
     case 'ADD_MEDICATION':
       console.log("In reducer, calling add medication state and action are", state, action);
       return {medications: [...state.medications, action.medication]};

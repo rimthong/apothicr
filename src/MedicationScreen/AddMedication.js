@@ -151,9 +151,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddClick: medication => {
-      dispatch(actions.addMedication(medication))
-    }
+    onAddClick: medication => dispatch(actions.addMedication(medication)),
   }
 };
 

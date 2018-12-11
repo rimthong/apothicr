@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppRegistry } from 'react-native';
 import { Container, Header, Left, Body, Title, Card, CardItem, Content, Right, Icon, Button, Text } from 'native-base';
+import actions from '../actions'
 import { connect } from 'react-redux';
 
 const renderIcon = (format) => {
@@ -17,6 +18,11 @@ const renderIcon = (format) => {
 const renderSchedule = ({ amount, frequency, dose }) => <Text>{`${amount} x ${dose} @ ${frequency}`}</Text>;
 
 class Medication extends React.Component {
+  
+  componentWillMount() {
+    this.props.fetchMedications();
+  }
+
   render() {
     return (
       <Container>
@@ -72,4 +78,9 @@ const mapStateToProps = (state) => {
   return { medication };
 };
 
-export default connect(mapStateToProps)(Medication);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchMedications: () => dispatch(actions.fetchMedications()),
+  }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Medication);
